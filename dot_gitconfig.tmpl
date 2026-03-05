@@ -1,0 +1,15 @@
+[user]
+  name = {{ .git_identity.name | quote }}
+  email = {{ .git_identity.email | quote }}
+
+[push]
+  default = current
+
+[init]
+  defaultBranch = main
+
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+
+[core]
+  editor = vim

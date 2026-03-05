@@ -1,0 +1,52 @@
+# yadm gitignore - prevents tracking sensitive files
+
+# Sensitive configuration files
+.claude.json
+.claude.json.backup
+.spot_aliases
+.netrc
+.saml2aws
+*.pgp
+.rxtspot_token
+.ovftool.ssldb
+
+# SSH keys and configuration
+.ssh/
+
+# AWS credentials
+.aws/
+
+# Shell history files
+.zsh_history
+.bash_history
+.python_history
+.node_repl_history
+.wcalc_history
+.lesshst
+
+# Editor state files
+.viminfo
+.vim/.netrwhist
+
+# Generated/cache files
+.zcompdump*
+.wget-hsts
+
+# Task data (contains personal task information)
+.task/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Application data directories (may contain sensitive data)
+.config/Bitwarden*
+.config/google-chrome/
+.config/microsoft-identity-broker/
+.config/claude/
+.config/gemini/
+
+# Local kubeconfig files (may contain cluster credentials)
+.kube/
