@@ -1,0 +1,17 @@
+# alias l="exa --sort=time --reverse --group-directories-first --icons"
+# alias la="exa --sort=time --reverse --group-directories-first -a --icons"
+# alias ll="exa --sort=time --reverse --group-directories-first -lh --icons"
+# alias ls="exa --sort=time --reverse --group-directories-first --icons"
+# alias lsa="exa --sort=time --reverse --group-directories-first -la --icons"
+
+alias tree="exa -T"           # Basic tree view
+alias tree2="exa -T 2"        # Tree view with 2 levels of depth
+alias tree3="exa -T 3"        # Tree view with 3 levels of depth
+
+alias fd='fdfind'
+
+alias unlock-bw='export BW_SESSION=$(bw unlock --raw)'
+alias secret-decode="jq '.data | map_values(@base64d)'"
+alias t='tmux new -A -s main'
+alias oar-setup='export OPENROUTER_API_KEY=$(bw get notes openrouter-api-key)'
+alias k=kubectl

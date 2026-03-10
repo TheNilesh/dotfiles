@@ -1,0 +1,10 @@
+#!/usr/bin/env fish
+# ~/dotfiles/bootstrap.fish
+
+# install fisher if not present
+if not functions -q fisher
+    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
+end
+
+# sync plugins from fish_plugins lockfile
+fisher update

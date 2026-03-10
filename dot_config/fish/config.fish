@@ -1,11 +1,10 @@
 if status is-interactive
-# Commands to run in interactive sessions can go here
+    # Commands to run in interactive sessions can go here
+    direnv hook fish | source
+    starship init fish | source
+    ~/.local/bin/mise activate fish | source # added by https://mise.run/fish
 end
 
-direnv hook fish | source
-starship init fish | source
-
-~/.local/bin/mise activate fish | source # added by https://mise.run/fish
 
 # Helper for setting env variables without entering on terminal
 function set-secret
