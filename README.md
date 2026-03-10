@@ -10,12 +10,6 @@ The repository tracks shell configuration, terminal tools, and editor settings s
 * git
 * chezmoi
 
-Install chezmoi:
-
-```
-sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
-```
-
 ---
 
 ## Bootstrap on a New Machine
@@ -23,7 +17,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
 Clone and apply the configuration in one step:
 
 ```
-chezmoi init --apply git@github.com:TheNilesh/dotfiles.git
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply TheNilesh
 ```
 
 This will:
