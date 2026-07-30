@@ -9,7 +9,17 @@ sudo apt install -y \
   fd-find \
   bat \
   fzf \
-  tmux
+  tmux \
+  fish \
+  direnv
+
+if ! command -v starship >/dev/null 2>&1; then
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes
+fi
+
+if ! command -v mise >/dev/null 2>&1; then
+  curl https://mise.run | sh
+fi
 
 if command -v go >/dev/null 2>&1; then
   go install github.com/charmbracelet/glow/v2@latest

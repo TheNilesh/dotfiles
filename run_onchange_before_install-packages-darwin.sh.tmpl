@@ -3,16 +3,38 @@
 set -euo pipefail
 
 brew bundle --no-lock --file=/dev/stdin <<'EOF'
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # GitHub command-line tool
 brew "gh"
+# Render markdown on the CLI
+brew "glow"
+# Tool for glamorous shell scripts
+brew "gum"
+# Polyglot tool version manager
+brew "mise"
 # Tools for one-time password authentication systems
 brew "oath-toolkit"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Terminal multiplexer
+brew "tmux"
 # Desktop password and login vault
 cask "bitwarden"
 # Terminal-based AI coding assistant
