@@ -1,0 +1,3 @@
+[data.git_identity]
+    name = {{ promptStringOnce . "git_identity.name" "Name for git commits" | quote }}
+    email = {{ promptStringOnce . "git_identity.email" "Email for git commits" | quote }}
