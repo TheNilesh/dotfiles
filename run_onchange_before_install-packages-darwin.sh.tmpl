@@ -1,0 +1,27 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+brew bundle --no-lock --file=/dev/stdin <<'EOF'
+# Secure and free password manager for all of your devices
+brew "bitwarden-cli"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# GitHub command-line tool
+brew "gh"
+# Tools for one-time password authentication systems
+brew "oath-toolkit"
+# Desktop password and login vault
+cask "bitwarden"
+# Terminal-based AI coding assistant
+cask "claude-code@latest"
+# Web browser
+cask "firefox"
+# Replacement for Docker Desktop
+cask "orbstack"
+# Zero trust network access platform
+cask "twingate"
+EOF
+{{ end -}}

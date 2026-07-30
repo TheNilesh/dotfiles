@@ -1,0 +1,91 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Configuring macOS defaults..."
+
+# -----------------------------------------------------------------------------
+# Keyboard
+# -----------------------------------------------------------------------------
+
+# Faster key repeat
+defaults write -g InitialKeyRepeat -int 10
+defaults write -g KeyRepeat -int 1
+
+# Disable press-and-hold accent popup
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+# Full keyboard navigation
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# -----------------------------------------------------------------------------
+# Trackpad
+# -----------------------------------------------------------------------------
+
+# Tap to click
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Three-finger drag
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+
+# -----------------------------------------------------------------------------
+# Finder
+# -----------------------------------------------------------------------------
+
+# Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Show hidden files
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Show path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Keep folders first
+defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+# Search current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+# -----------------------------------------------------------------------------
+# Dock
+# -----------------------------------------------------------------------------
+
+# Don't show recent applications
+defaults write com.apple.dock show-recents -bool false
+
+# Automatically hide Dock
+defaults write com.apple.dock autohide -bool true
+
+# Faster Dock animation
+defaults write com.apple.dock autohide-time-modifier -float 0.15
+
+# Remove hide delay
+defaults write com.apple.dock autohide-delay -float 0
+
+# -----------------------------------------------------------------------------
+# Screenshots
+# -----------------------------------------------------------------------------
+
+# Disable screenshot shadow
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# -----------------------------------------------------------------------------
+# Restart affected services
+# -----------------------------------------------------------------------------
+
+killall Dock 2>/dev/null || true
+killall Finder 2>/dev/null || true
+killall SystemUIServer 2>/dev/null || true
+
+echo
+echo "Done."
+echo "Some settings require logging out or restarting macOS."
+{{ end -}}
