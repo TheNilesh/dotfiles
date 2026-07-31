@@ -1,209 +1,52 @@
 # Dotfiles
 
-Personal development environment managed with **chezmoi** and stored in Git.
-The repository tracks shell configuration, terminal tools, and editor settings so the same environment can be reproduced on any machine.
+Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). This repo
+*is* the chezmoi source directory — files here only take effect on the
+machine after `chezmoi apply`.
 
----
+## What's here
 
-## Requirements
+- **Shell**: fish config (`dot_config/fish/`) — split into `conf.d/` (path,
+  exports, abbreviations) and `functions/`, plus starship prompt config.
+- **Git**: `dot_gitconfig.tmpl` (templated with your name/email) and a global
+  `dot_config/git/ignore`.
+- **Terminal/editor**: Ghostty (`dot_config/ghostty/`), VSCodium settings,
+  Claude Code settings (`dot_claude/`).
+- **macOS**: Karabiner key remapping, plus bootstrap scripts that install
+  Homebrew packages and set `defaults write` system preferences.
+- **Bootstrap scripts** (`run_once_*`, `run_onchange_*`): install the
+  toolchain, set fish as the default shell, and apply macOS packages/defaults
+  — run automatically by chezmoi, in order, on `apply`.
 
-* git
-* chezmoi
+Linux gets its packages from `run_once_before_install-tools.sh.tmpl` (apt);
+macOS gets its packages from the Brewfile in
+`run_onchange_before_install-packages-darwin.sh.tmpl`. These two lists are
+kept in sync manually, on purpose.
 
----
+## Bootstrap a new machine
 
-## Bootstrap on a New Machine
-
-Clone and apply the configuration in one step:
+No chezmoi installed yet:
 
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply TheNilesh
 ```
 
-This will:
-
-1. Clone the repository into the chezmoi source directory.
-2. Install managed configuration files into `$HOME`.
-3. Recreate the configured shell environment.
-
-Typical source directory:
+chezmoi already installed:
 
 ```
-~/.local/share/chezmoi
+chezmoi init --apply TheNilesh
 ```
 
----
-
-## Repository Layout
-
-Example structure:
+## Everyday use
 
 ```
-dot_config/
-  fish/
-  starship.toml
-
-dot_tmux.conf
-dot_gitconfig.tmpl
-
-scripts/
-README.md
+chezmoi diff      # preview what would change in $HOME
+chezmoi apply     # install source state into $HOME
+chezmoi cd        # jump into this source directory
+chezmoi add <path> # start managing an existing $HOME file
 ```
 
-How names map to the real filesystem:
+After editing a file in `$HOME` that's already managed, re-import it with
+`chezmoi add <path>`, then commit and push from `chezmoi cd`.
 
-| Source file                   | Installed as                 |
-| ----------------------------- | ---------------------------- |
-| `dot_tmux.conf`               | `~/.tmux.conf`               |
-| `dot_config/fish/config.fish` | `~/.config/fish/config.fish` |
-| `dot_gitconfig.tmpl`          | `~/.gitconfig`               |
-
-Prefix meanings:
-
-| Prefix        | Meaning                                     |
-| ------------- | ------------------------------------------- |
-| `dot_`        | represents a leading `.` in the target path |
-| `private_`    | restricts file permissions                  |
-| `.tmpl`       | rendered as a template before installation  |
-| `executable_` | installed with executable permissions       |
-
----
-
-## Editing Chezmoi Managed Files
-
-Edit files in the chezmoi source directory:
-
-```shell
-chezmoi cd
-```
-
-or open it in the editor:
-
-```shell
-chezmoi edit ~/.config/fish/config.fish
-```
-
-Preview changes:
-
-```
-chezmoi diff
-```
-
-Apply changes:
-
-```
-chezmoi apply
-```
-
----
-
-## Adding New Files to Dotfiles
-
-Example: manage a fish configuration file.
-
-```
-chezmoi add ~/.config/fish/config.fish
-```
-
-chezmoi converts it into source format:
-
-```
-dot_config/fish/config.fish
-```
-
-Verify:
-
-```
-chezmoi diff
-```
-
-Commit changes:
-
-```
-chezmoi cd
-git add .
-git commit -m "add fish config"
-git push
-```
-
----
-
-## Updating a Managed File
-
-After editing a file in `$HOME`, re-import it:
-
-```
-chezmoi add ~/.config/fish/config.fish
-```
-
-Then commit:
-
-```
-chezmoi cd
-git commit -am "update fish config"
-git push
-```
-
----
-
-## Pull Updates on Another Machine
-
-```
-chezmoi update
-```
-
-This pulls the latest repository changes and applies them.
-
----
-
-## Managing Secrets
-
-Sensitive files can be encrypted before committing:
-
-```
-chezmoi add --encrypt ~/.ssh/config
-```
-
-Encrypted files remain safe even if the repository becomes public.
-
----
-
-## Typical Workflow
-
-Modify configuration:
-
-```
-vim ~/.config/fish/config.fish
-```
-
-Update chezmoi source:
-
-```
-chezmoi add ~/.config/fish/config.fish
-```
-
-Apply changes:
-
-```
-chezmoi apply
-```
-
-Commit and push:
-
-```
-chezmoi cd
-git commit -am "update shell config"
-git push
-```
-
----
-
-## Restoring the Environment
-
-Running the bootstrap command on any machine recreates the same configuration:
-
-```
-chezmoi init --apply git@github.com:<username>/dotfiles.git
-```
-
-This ensures consistent shell behavior, tools, and editor configuration across systems.
+See `CLAUDE.md` for the full architecture notes and known gaps.

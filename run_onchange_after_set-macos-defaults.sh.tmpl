@@ -8,6 +8,9 @@ echo "Configuring macOS defaults..."
 # Keyboard
 # -----------------------------------------------------------------------------
 
+# Traditional (non-natural) scroll direction - familiar to Linux/Windows users
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
 # Faster key repeat
 defaults write -g InitialKeyRepeat -int 10
 defaults write -g KeyRepeat -int 1
@@ -17,6 +20,24 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Full keyboard navigation
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Disabling smart quotes
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Disabling smart dashes
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# Disabling automatic capitalization
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# Disabling auto period substitution (double-space -> period)
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# Disabling spelling autocorrect
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Disabling Safari/WebKit auto spelling correction (affects web text fields)
+defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false
 
 # -----------------------------------------------------------------------------
 # Trackpad

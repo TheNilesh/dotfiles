@@ -1,4 +1,7 @@
-# yadm gitignore - prevents tracking sensitive files
+# Global gitignore - applies to all repos via core.excludesfile
+
+# macOS
+.DS_Store
 
 # Sensitive configuration files
 .claude.json

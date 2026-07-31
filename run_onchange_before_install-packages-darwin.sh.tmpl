@@ -2,7 +2,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-brew bundle --no-lock --file=/dev/stdin <<'EOF'
+brew bundle --file=/dev/stdin <<'EOF'
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Secure and free password manager for all of your devices
@@ -15,6 +15,8 @@ brew "direnv"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# Distributed revision control system
+brew "git"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Command-line fuzzy finder written in Go
@@ -35,8 +37,6 @@ brew "ripgrep"
 brew "starship"
 # Terminal multiplexer
 brew "tmux"
-# Desktop password and login vault
-cask "bitwarden"
 # Terminal-based AI coding assistant
 cask "claude-code@latest"
 # Web browser
@@ -45,5 +45,35 @@ cask "firefox"
 cask "orbstack"
 # Zero trust network access platform
 cask "twingate"
+# Modern terminal emulator
+cask "ghostty"
+# A post-modern modal text editor
+brew "helix"
+# Monospaced font for developers
+cask "font-jetbrains-mono"
+# Monospaced font with programming ligatures
+cask "font-fira-code"
+# Monospaced font family for coding environments
+cask "font-source-code-pro"
+# Multiplayer code editor
+cask "zed"
+# Binary releases of VS Code without MS branding/telemetry/licensing
+cask "vscodium"
+# Replacement for spotlight
+cask "raycast"
+# Window manager
+cask "rectangle"
+# screenshot manager
+cask "shottr"
+# uninstall manager
+cask "appcleaner"
+# clipboard manager
+cask "maccy"
+# window switch helper
+cask "alt-tab"
+# menu bar icon manager
+cask "jordanbaird-ice"
+# keymapper
+cask "karabiner-elements"
 EOF
 {{ end -}}
