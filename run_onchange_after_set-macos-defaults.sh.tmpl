@@ -11,9 +11,10 @@ echo "Configuring macOS defaults..."
 # Traditional (non-natural) scroll direction - familiar to Linux/Windows users
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
-# Faster key repeat
-defaults write -g InitialKeyRepeat -int 10
-defaults write -g KeyRepeat -int 1
+# Faster key repeat (values below Apple's UI-supported floor of
+# InitialKeyRepeat=15 / KeyRepeat=2 can cause erratic double/triple key events)
+defaults write -g InitialKeyRepeat -int 15
+defaults write -g KeyRepeat -int 2
 
 # Disable press-and-hold accent popup
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -52,6 +53,10 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # Three-finger drag
 defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+# Newer gesture key actually checked by System Settings / the OS at runtime;
+# the two legacy per-device keys above are no longer sufficient on their own
+defaults write -g com.apple.trackpad.threeFingerDragGesture -int 1
+defaults -currentHost write -g com.apple.trackpad.threeFingerDragGesture -int 1
 
 # -----------------------------------------------------------------------------
 # Finder
