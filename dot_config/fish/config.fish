@@ -1,3 +1,10 @@
+# Client's TERM (e.g. xterm-ghostty, xterm-kitty) may lack a terminfo entry
+# on this host, which breaks tmux; only override it for incoming ssh sessions
+# so local terminal capabilities (truecolor, undercurl, ...) are unaffected.
+if set -q SSH_TTY
+    set -gx TERM xterm-256color
+end
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
     direnv hook fish | source
