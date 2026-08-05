@@ -42,6 +42,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -79,6 +83,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -111,6 +119,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -143,6 +155,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -175,6 +191,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -212,6 +232,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -244,6 +268,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -276,6 +304,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -308,6 +340,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -345,6 +381,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -372,6 +412,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -404,6 +448,10 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
@@ -431,6 +479,53 @@
                 {
                   "vendor_id": 9610,
                   "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Left Shift + Right Shift = real Caps Lock",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "simultaneous": [
+              {
+                "key_code": "left_shift"
+              },
+              {
+                "key_code": "right_shift"
+              }
+            ],
+            "simultaneous_options": {
+              "detect_key_down_uninterruptedly": true,
+              "key_down_order": "strict",
+              "key_up_when": "any"
+            }
+          },
+          "to": [
+            {
+              "key_code": "caps_lock"
+            }
+          ],
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "vendor_id": 9610,
+                  "product_id": 268
+                },
+                {
+                  "vendor_id": 13652,
+                  "product_id": 64009
                 }
               ]
             }
