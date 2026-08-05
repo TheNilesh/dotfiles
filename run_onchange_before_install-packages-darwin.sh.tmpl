@@ -2,6 +2,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Non-official tap formula; pre-trust so `brew bundle` below doesn't hit an
+# interactive trust prompt with no TTY attached.
+brew trust --formulae jetbrains/utils/teamcity 2>/dev/null || true
+
 brew bundle --file=/dev/stdin <<'EOF'
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
