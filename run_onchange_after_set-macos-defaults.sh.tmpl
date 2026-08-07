@@ -8,8 +8,8 @@ echo "Configuring macOS defaults..."
 # Keyboard
 # -----------------------------------------------------------------------------
 
-# Traditional (non-natural) scroll direction - familiar to Linux/Windows users
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+# Natural scroll direction (content follows finger movement)
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
 # Faster key repeat (values below Apple's UI-supported floor of
 # InitialKeyRepeat=15 / KeyRepeat=2 can cause erratic double/triple key events)
