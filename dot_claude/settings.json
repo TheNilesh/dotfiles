@@ -12,8 +12,10 @@
     "code-review@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "slack@claude-plugins-official": true,
-    "gopls-lsp@claude-plugins-official": true,
-    "firecrawl@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": false,
+    "firecrawl@claude-plugins-official": false
   },
-  "theme": "auto"
+  "theme": "auto",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
