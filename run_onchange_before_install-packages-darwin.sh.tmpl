@@ -46,7 +46,7 @@ brew "starship"
 # Terminal multiplexer
 brew "tmux"
 # Terminal-based AI coding assistant
-cask "claude-code@latest"
+cask "claude-code"
 # Web browser
 cask "firefox"
 # Replacement for Docker Desktop
@@ -55,8 +55,8 @@ cask "orbstack"
 cask "ghostty"
 # A post-modern modal text editor
 brew "helix"
-# Monospaced font for developers
-cask "font-jetbrains-mono"
+# Patched monospaced font with terminal and development icons
+cask "font-jetbrains-mono-nerd-font"
 # Monospaced font with programming ligatures
 cask "font-fira-code"
 # Monospaced font family for coding environments
@@ -85,5 +85,13 @@ cask "meetingbar"
 brew "jetbrains/utils/teamcity"
 # Platform9: Zero trust network access platform
 cask "twingate"
+# Execute binaries from Python packages in isolated environments (installs python@3.14 as a dependency)
+brew "pipx"
+
 EOF
+
+# openstack CLI, installed via pipx into an isolated venv (python@3.14 comes
+# in as pipx's dependency above). ~/.local/bin is already on PATH via
+# dot_config/fish/conf.d/path.fish.
+pipx install python-openstackclient
 {{ end -}}

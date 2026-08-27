@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+field="${1:-1}"
+
+# Number of physical lines occupied by the shell prompt, including the
+# current command line.
+prompt_lines=2
+
+# How many output lines to search backwards.
+lookback=8
+
+# Only accept a positive integer field number.
+[[ "$field" =~ ^[1-9][0-9]*$ ]] || exit 1
+
+cursor_y="$(tmux display-message -p '#{cursor_y}')"
+
+# There must be something above the prompt.
+(( cursor_y >= prompt_lines )) || exit 0
+
+# Skip the prompt itself and start with the output immediately above it.
+end=$((cursor_y - prompt_lines))
+
+start=$((end - lookback + 1))
+(( start < 0 )) && start=0
+
+word="$(
+    tmux capture-pane \
+        -p \
+        -S "$start" \
+        -E "$end" |
+    awk -v field="$field" '
+        NF >= field {
+            value = $field
+        }
+        END {
+            if (value != "")
+                print value
+        }
+    '
+)"
+
+[[ -n "$word" ]] || exit 0
+
+tmux set-buffer -- "$word"
+tmux paste-buffer

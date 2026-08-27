@@ -22,6 +22,9 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 # Full keyboard navigation
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
+# Function keys without holding Fn/Globe key. This is needed to use with external keybaord
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
 # Disabling smart quotes
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
