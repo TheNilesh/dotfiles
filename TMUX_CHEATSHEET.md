@@ -156,29 +156,23 @@ Example: after `k -n kplane get po` prints
 `api-server-7d8c9f-x2abc   1/1   Running`, pressing `g` at the next prompt
 pastes `api-server-7d8c9f-x2abc`.
 
-## tmux-digit — fancy window-number glyphs
+## Tokyo Night theme and window numbers
 
-This plugin has no keybinding of its own — it rewrites `#I` (window index)
-wherever it appears in `status-left`, `status-right`, `window-status-format`,
-`window-status-current-format`, and `set-titles-string`, replacing the plain
-digit with a distinct glyph. The default `circle` style uses Unicode circled
-digits (⓪①②③④⑤⑥⑦⑧⑨…), whose inner numerals look small. This configuration
-uses the filled Nerd Font `square_inv` glyphs instead, which occupy more of the
-terminal cell and appear larger and heavier. The point is to make window
-numbers easier to pick out at a glance in the status bar, so the existing tmux
-window-switch bindings are faster to use correctly:
+Tokyo Night is configured with a transparent `night` palette, a date/time-only
+right side, and filled-square (`fsquare`) Nerd Font window numbers. Pane and
+zoom IDs are hidden to keep the bar compact.
+
+The normal tmux navigation keys are unchanged:
 
 | Keys | Action |
 |---|---|
-| `prefix` `0`–`9` | Jump directly to that window number (default tmux binding, unaffected by this plugin — it only changes how the number is *displayed*) |
+| `prefix` `0`–`9` | Jump directly to that window number |
 | `prefix` `n` | Next window |
 | `prefix` `p` | Previous window |
-| `prefix` `w` | Interactive window picker (also shows the glyph-rendered numbers) |
+| `prefix` `w` | Interactive window picker |
 
-Change the glyph style with `@digit-style` (`circle`, `circle_inv`, `square`,
-`square_inv`, `layer`, `layer_inv`, `number` — see
-`~/.config/tmux/plugins/tmux-digit/digit.tmux` for the exact glyph sets).
-`tmux.conf` explicitly selects `square_inv`.
+Tokyo Night also supports `none`, `digital`, `roman`, `hsquare`, `dsquare`,
+`super`, and `sub` through `@tokyo-night-tmux_window_id_style`.
 
 ## Optional / currently disabled plugins
 

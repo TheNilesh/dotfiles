@@ -7,6 +7,8 @@ set -euo pipefail
 brew trust --formulae jetbrains/utils/teamcity 2>/dev/null || true
 
 brew bundle --file=/dev/stdin <<'EOF'
+# Modern Bash required by tmux themes and plugins
+brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Secure and free password manager for all of your devices
