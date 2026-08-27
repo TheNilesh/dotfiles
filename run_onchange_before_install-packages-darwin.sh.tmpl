@@ -109,5 +109,13 @@ cask "activitywatch"
 brew "jetbrains/utils/teamcity"
 # Platform9: Zero trust network access platform
 cask "twingate"
+# Execute binaries from Python packages in isolated environments (installs python@3.14 as a dependency)
+brew "pipx"
+
 EOF
+
+# openstack CLI, installed via pipx into an isolated venv (python@3.14 comes
+# in as pipx's dependency above). ~/.local/bin is already on PATH via
+# dot_config/fish/conf.d/path.fish.
+pipx install python-openstackclient
 {{ end -}}
