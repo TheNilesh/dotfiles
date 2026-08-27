@@ -1,15 +1,22 @@
-# Client's TERM (e.g. xterm-ghostty, xterm-kitty) may lack a terminfo entry
-# on this host, which breaks tmux; only override it for incoming ssh sessions
-# so local terminal capabilities (truecolor, undercurl, ...) are unaffected.
-if set -q SSH_TTY
+# A remote host may not have the client's terminfo (for example,
+# xterm-ghostty). Use a widely available type before starting tmux, but keep
+# tmux's own TERM value inside panes.
+if set -q SSH_TTY; and not set -q TMUX
     set -gx TERM xterm-256color
 end
 
 if status is-interactive
-    # Commands to run in interactive sessions can go here
-    direnv hook fish | source
+    # Homebrew initializes direnv and mise through fish's vendor_conf.d.
+    # Keep these fallbacks for installations that do not ship those snippets.
+    if not functions -q __direnv_export_eval
+        direnv hook fish | source
+    end
+
     starship init fish | source
-    mise activate fish | source
+
+    if not functions -q __mise_env_eval
+        mise activate fish | source
+    end
 end
 
 # Helper for setting env variables without entering on terminal
