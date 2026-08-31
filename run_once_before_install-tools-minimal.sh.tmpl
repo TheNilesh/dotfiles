@@ -1,0 +1,18 @@
+{{ if and (index . "minimal") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo apt update
+sudo apt install -y tmux
+
+if ! command -v kubectl >/dev/null 2>&1; then
+  kubectl_version="$(curl -fsSL https://dl.k8s.io/release/stable.txt)"
+  curl -fsSLO "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
+  chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/kubectl
+fi
+
+if ! grep -qxF "alias k=kubectl" "$HOME/.bashrc" 2>/dev/null; then
+  echo "alias k=kubectl" >> "$HOME/.bashrc"
+fi
+{{ end -}}

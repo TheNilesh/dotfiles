@@ -9,3 +9,13 @@ Library/Application Support/VSCodium
 {{ if ne .chezmoi.os "linux" -}}
 .config/VSCodium
 {{ end -}}
+
+{{ if (index . "minimal") -}}
+*
+!.config
+.config/*
+!.config/tmux
+!.config/tmux/**
+!install-tpm.sh
+!install-tools-minimal.sh
+{{ end -}}

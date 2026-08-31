@@ -1,3 +1,6 @@
+[data]
+    minimal = {{ promptBoolOnce . "minimal" "Minimal install (troubleshooting VM: tmux + kubectl only)" false }}
+
 [data.git_identity]
     name = {{ promptStringOnce . "git_identity.name" "Name for git commits" | quote }}
     email = {{ promptStringOnce . "git_identity.email" "Email for git commits" | quote }}
