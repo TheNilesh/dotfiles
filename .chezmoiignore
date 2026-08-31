@@ -1,6 +1,7 @@
 README.md
 TODO.md
 CLAUDE.md
+TMUX_CHEATSHEET.md
 
 {{ if ne .chezmoi.os "darwin" -}}
 Library/Application Support/VSCodium

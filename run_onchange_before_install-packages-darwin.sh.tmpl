@@ -3,12 +3,16 @@
 set -euo pipefail
 
 brew bundle --file=/dev/stdin <<'EOF'
+# Modern Bash required by tmux themes and plugins
+brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Secure and free password manager for all of your devices
 brew "bitwarden-cli"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+# CLI to build and run dev containers
+brew "devcontainer"
 # Load/unload environment variables based on $PWD
 brew "direnv"
 # Simple, fast and user-friendly alternative to find
@@ -25,6 +29,8 @@ brew "fzf"
 brew "gh"
 # Render markdown on the CLI
 brew "glow"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # Tool for glamorous shell scripts
 brew "gum"
 # Polyglot tool version manager
@@ -38,7 +44,7 @@ brew "starship"
 # Terminal multiplexer
 brew "tmux"
 # Terminal-based AI coding assistant
-cask "claude-code@latest"
+cask "claude-code"
 # Web browser
 cask "firefox"
 # Replacement for Docker Desktop
@@ -47,8 +53,8 @@ cask "orbstack"
 cask "ghostty"
 # A post-modern modal text editor
 brew "helix"
-# Monospaced font for developers
-cask "font-jetbrains-mono"
+# Patched monospaced font with terminal and development icons
+cask "font-jetbrains-mono-nerd-font"
 # Monospaced font with programming ligatures
 cask "font-fira-code"
 # Monospaced font family for coding environments
