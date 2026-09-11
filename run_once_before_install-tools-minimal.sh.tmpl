@@ -3,7 +3,21 @@
 set -euo pipefail
 
 sudo apt update
-sudo apt install -y tmux
+sudo apt install -y \
+  tmux \
+  ripgrep \
+  fd-find \
+  fzf \
+  git \
+  jq \
+  htop \
+  mtr \
+  dnsutils \
+  ncdu
+
+if ! command -v starship >/dev/null 2>&1; then
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes
+fi
 
 if ! command -v kubectl >/dev/null 2>&1; then
   kubectl_version="$(curl -fsSL https://dl.k8s.io/release/stable.txt)"
@@ -12,7 +26,7 @@ if ! command -v kubectl >/dev/null 2>&1; then
   sudo mv kubectl /usr/local/bin/kubectl
 fi
 
-if ! grep -qxF "alias k=kubectl" "$HOME/.bashrc" 2>/dev/null; then
-  echo "alias k=kubectl" >> "$HOME/.bashrc"
+if ! grep -qxF "source ~/.aliases" "$HOME/.bashrc" 2>/dev/null; then
+  echo "source ~/.aliases" >> "$HOME/.bashrc"
 fi
 {{ end -}}

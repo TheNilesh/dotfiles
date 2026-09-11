@@ -16,6 +16,7 @@ Library/Application Support/VSCodium
 .config/*
 !.config/tmux
 !.config/tmux/**
+!.aliases
 !install-tpm.sh
 !install-tools-minimal.sh
 {{ end -}}
