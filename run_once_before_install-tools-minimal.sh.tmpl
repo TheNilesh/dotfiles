@@ -1,0 +1,36 @@
+{{ if and (index . "minimal") (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo apt update
+sudo apt install -y \
+  tmux \
+  ripgrep \
+  fd-find \
+  fzf \
+  git \
+  jq \
+  htop \
+  mtr \
+  dnsutils \
+  ncdu
+
+if ! command -v kubectl >/dev/null 2>&1; then
+  kubectl_version="$(curl -fsSL https://dl.k8s.io/release/stable.txt)"
+  curl -fsSLO "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
+  chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/kubectl
+fi
+
+if ! grep -qxF "source ~/.aliases" "$HOME/.bashrc" 2>/dev/null; then
+  echo "source ~/.aliases" >> "$HOME/.bashrc"
+fi
+
+if ! grep -qxF 'if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then' "$HOME/.bashrc" 2>/dev/null; then
+  cat >> "$HOME/.bashrc" <<'EOF'
+if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
+  tmux attach -t main || tmux new -s main
+fi
+EOF
+fi
+{{ end -}}

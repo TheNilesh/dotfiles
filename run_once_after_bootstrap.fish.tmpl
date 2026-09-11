@@ -1,3 +1,4 @@
+{{ if not (index . "minimal") -}}
 #!/usr/bin/env fish
 # ~/dotfiles/bootstrap.fish
 
@@ -8,3 +9,4 @@ end
 
 # sync plugins from fish_plugins lockfile
 fisher update
+{{ end -}}

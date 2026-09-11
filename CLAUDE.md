@@ -91,12 +91,22 @@ loaded automatically by fish, no explicit sourcing needed) and
 
 ## Known constraints
 
-- **Cross-platform package lists are intentionally maintained manually, not
-  synced.** Linux packages live in `run_once_before_install-tools.sh.tmpl`
-  (apt); macOS packages live in the Brewfile embedded in
-  `run_onchange_before_install-packages-darwin.sh.tmpl`. Do not build
-  automation to keep these two lists in parity — that's a deliberate choice,
-  not an oversight.
+- **Cross-platform package lists are hand-maintained, not synced by tooling.**
+  Linux packages live in `run_once_before_install-tools.sh.tmpl` (apt, plus
+  a handful of curl/GitHub-release installs for tools with no apt package);
+  macOS packages live in the Brewfile embedded in
+  `run_onchange_before_install-packages-darwin.sh.tmpl`. The goal is the same
+  *tool set* on both platforms (a unified experience) — reconciling the two
+  lists is a deliberate manual exercise done by comparing them, not something
+  to automate (no diff/sync script). Genuinely macOS-only GUI utilities
+  (Raycast, Rectangle, AltTab, Karabiner-Elements, etc. — window management
+  and menu-bar tools with no meaningful Linux equivalent) are the accepted
+  exception and stay Brewfile-only; anything with a real cross-platform
+  story (e.g. Ghostty, which does support Linux) should get added on both
+  sides. A few Linux entries are best-effort (community PPA for `ghostty`,
+  `helix`/`git-delta` needing a recent-enough Ubuntu release, GitHub-release
+  downloads for `lazygit` and the JetBrains Mono Nerd Font) — verify these
+  still resolve correctly before trusting them on a fresh box.
 - `TODO.md` records known gaps: no unified bootstrap entry point across
   shells yet, no flag to skip templated dotfiles that don't apply to a given
   environment (e.g. devcontainers), and devcontainer compatibility is

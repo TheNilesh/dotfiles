@@ -1,3 +1,4 @@
+{{ if not (index . "minimal") -}}
 {{ if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 set -e
@@ -12,7 +13,33 @@ sudo apt install -y \
   tmux \
   fish \
   direnv \
-  fonts-firacode
+  fonts-firacode \
+  git \
+  jq \
+  htop \
+  mtr \
+  dnsutils \
+  ncdu \
+  unzip \
+  bash \
+  ffmpeg \
+  golang-go \
+  oathtool \
+  taskwarrior \
+  git-delta \
+  nodejs \
+  npm
+
+if ! command -v eza >/dev/null 2>&1; then
+  sudo mkdir -p /etc/apt/keyrings
+  wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+  echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" \
+    | sudo tee /etc/apt/sources.list.d/gierens.list > /dev/null
+  sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+  sudo apt update
+  sudo apt install -y eza
+fi
 
 if ! command -v gh >/dev/null 2>&1; then
   (type -p wget >/dev/null || sudo apt install -y wget)
@@ -52,9 +79,82 @@ if ! command -v codium >/dev/null 2>&1; then
   sudo apt install -y codium
 fi
 
-if command -v go >/dev/null 2>&1; then
-  go install github.com/charmbracelet/glow/v2@latest
-  go install github.com/charmbracelet/gum@latest
+if ! command -v glow >/dev/null 2>&1 || ! command -v gum >/dev/null 2>&1; then
+  sudo mkdir -p /etc/apt/keyrings
+  curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+  echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" \
+    | sudo tee /etc/apt/sources.list.d/charm.list > /dev/null
+  sudo apt update
+  sudo apt install -y glow gum
+fi
+
+if ! command -v kubectl >/dev/null 2>&1; then
+  kubectl_version="$(curl -fsSL https://dl.k8s.io/release/stable.txt)"
+  curl -fsSLO "https://dl.k8s.io/release/${kubectl_version}/bin/linux/amd64/kubectl"
+  chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/kubectl
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+if ! command -v bw >/dev/null 2>&1; then
+  curl -fsSLo /tmp/bw.zip "https://bitwarden.com/download/?app=cli&platform=linux"
+  unzip -o /tmp/bw.zip -d /tmp/bw-cli
+  sudo install /tmp/bw-cli/bw /usr/local/bin/bw
+  rm -rf /tmp/bw.zip /tmp/bw-cli
+fi
+
+if ! command -v devcontainer >/dev/null 2>&1; then
+  sudo npm install -g @devcontainers/cli
+fi
+
+if ! command -v hx >/dev/null 2>&1; then
+  # No apt package for helix on current Ubuntu releases, and the community PPA
+  # this used to rely on is archived/dead - install the upstream .deb instead.
+  helix_deb_url="$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest \
+    | grep -Po '"browser_download_url": "\K[^"]*amd64\.deb')"
+  curl -fsSLO "$helix_deb_url"
+  sudo apt install -y "./$(basename "$helix_deb_url")"
+  rm -f "$(basename "$helix_deb_url")"
+fi
+
+if ! command -v lazygit >/dev/null 2>&1; then
+  lazygit_version="$(curl -fsSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -Po '"tag_name": "v\K[^"]*')"
+  curl -fsSLO "https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_Linux_x86_64.tar.gz"
+  tar xf "lazygit_${lazygit_version}_Linux_x86_64.tar.gz" lazygit
+  sudo install lazygit /usr/local/bin
+  rm -f lazygit "lazygit_${lazygit_version}_Linux_x86_64.tar.gz"
+fi
+
+if [ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]; then
+  mkdir -p "$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+  curl -fsSLo /tmp/JetBrainsMono.zip "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+  unzip -o /tmp/JetBrainsMono.zip -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+  rm -f /tmp/JetBrainsMono.zip
+  fc-cache -f "$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+fi
+
+if [ ! -d "$HOME/.local/share/fonts/SourceCodePro" ]; then
+  # No apt package for this font on current Ubuntu releases (fonts-adobe-sourcecodepro
+  # was removed) - install straight from the upstream GitHub release instead.
+  mkdir -p "$HOME/.local/share/fonts/SourceCodePro"
+  source_code_pro_url="$(curl -fsSL https://api.github.com/repos/adobe-fonts/source-code-pro/releases/latest \
+    | grep -Po '"browser_download_url": "\K[^"]*TTF-source-code-pro[^"]*\.zip')"
+  curl -fsSLo /tmp/SourceCodePro.zip "$source_code_pro_url"
+  unzip -o /tmp/SourceCodePro.zip -d "$HOME/.local/share/fonts/SourceCodePro"
+  rm -f /tmp/SourceCodePro.zip
+  fc-cache -f "$HOME/.local/share/fonts/SourceCodePro"
+fi
+
+if ! command -v ghostty >/dev/null 2>&1; then
+  # Best-effort: Ghostty has no official Ubuntu/Debian package upstream yet,
+  # this relies on a community-maintained PPA — verify it still works for
+  # your Ubuntu release before trusting this on a fresh box.
+  sudo add-apt-repository -y ppa:mkasberg/ghostty
+  sudo apt update
+  sudo apt install -y ghostty
 fi
 {{ else if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env bash
@@ -63,4 +163,5 @@ set -e
 if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+{{ end -}}
 {{ end -}}

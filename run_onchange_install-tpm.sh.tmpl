@@ -1,4 +1,6 @@
+{{ $tmuxConfHash := include "dot_config/tmux/tmux.conf" | sha256sum -}}
 #!/usr/bin/env bash
+# tmux.conf hash: {{ $tmuxConfHash }}
 set -euo pipefail
 
 TPM="${XDG_CONFIG_HOME:-$HOME/.config}/tmux/plugins/tpm"

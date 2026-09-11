@@ -1,6 +1,6 @@
 # TODO for Improving Dotfiles
 
-- Provide flag to choose target to apply templated dotfiles. for example k8s devcontainer may not need exa.
+- Provide flag to choose target to apply templated dotfiles. for example k8s devcontainer may not need eza.
   - Check if inside devcontainers, then install only small set of tools
   - Check if macos then only install homebrew and brew bundles
 
