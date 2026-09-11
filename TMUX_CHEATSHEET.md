@@ -12,6 +12,11 @@ Prefix key: default tmux prefix, **Ctrl-b**. Every binding below marked
 | `prefix` `U` | Update all installed plugins |
 | `prefix` `Alt-u` | Uninstall/remove plugins no longer listed in `tmux.conf` |
 
+New plugins also install automatically on the next `chezmoi apply` —
+`run_onchange_install-tpm.sh.tmpl` re-runs whenever `tmux.conf` changes, so
+`prefix I` is only needed if you want it installed immediately without
+running `chezmoi apply` first.
+
 **Verify it works:** press `prefix I`. A message briefly flashes at the bottom
 ("TMUX plugins installed" or similar) and returns you to your pane — no
 errors. Nothing to look at otherwise; it's a background installer, not an
@@ -207,15 +212,15 @@ If all five respond, plugins are fully working.
   ```
   ls ~/.config/tmux/plugins/tmux-thumbs/target/release/thumbs
   ```
-  If missing, re-run `run_once_install-tpm.sh` from this repo (or
-  `chezmoi apply`) — it downloads the right binary automatically, including
-  on Apple Silicon (via Rosetta 2, since upstream ships no native arm64
-  macOS build).
+  If missing, run `chezmoi apply` — `run_onchange_install-tpm.sh.tmpl`
+  re-runs automatically whenever `tmux.conf` changes and downloads the right
+  binary automatically, including on Apple Silicon (via Rosetta 2, since
+  upstream ships no native arm64 macOS build).
 - **`prefix F` does nothing:** check for the compiled fingers binary:
   ```
   ls ~/.config/tmux/plugins/tmux-fingers/bin/tmux-fingers
   ```
-  If missing, reinstall via `prefix I` or re-run `run_once_install-tpm.sh`.
+  If missing, reinstall via `prefix I` or `chezmoi apply`.
 - **Window numbers show as boxes/`?` instead of circled digits:** the
   `circle` style uses standard Unicode circled-digit characters, so this
   usually means the terminal font lacks that glyph range. Switching
