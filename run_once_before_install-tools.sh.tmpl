@@ -14,7 +14,6 @@ sudo apt install -y \
   fish \
   direnv \
   fonts-firacode \
-  fonts-adobe-sourcecodepro \
   git \
   jq \
   htop \
@@ -27,7 +26,6 @@ sudo apt install -y \
   golang-go \
   oathtool \
   taskwarrior \
-  helix \
   git-delta \
   nodejs \
   npm
@@ -112,6 +110,16 @@ if ! command -v devcontainer >/dev/null 2>&1; then
   sudo npm install -g @devcontainers/cli
 fi
 
+if ! command -v hx >/dev/null 2>&1; then
+  # No apt package for helix on current Ubuntu releases, and the community PPA
+  # this used to rely on is archived/dead - install the upstream .deb instead.
+  helix_deb_url="$(curl -fsSL https://api.github.com/repos/helix-editor/helix/releases/latest \
+    | grep -Po '"browser_download_url": "\K[^"]*amd64\.deb')"
+  curl -fsSLO "$helix_deb_url"
+  sudo apt install -y "./$(basename "$helix_deb_url")"
+  rm -f "$(basename "$helix_deb_url")"
+fi
+
 if ! command -v lazygit >/dev/null 2>&1; then
   lazygit_version="$(curl -fsSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -Po '"tag_name": "v\K[^"]*')"
   curl -fsSLO "https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_Linux_x86_64.tar.gz"
@@ -126,6 +134,18 @@ if [ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont" ]; then
   unzip -o /tmp/JetBrainsMono.zip -d "$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
   rm -f /tmp/JetBrainsMono.zip
   fc-cache -f "$HOME/.local/share/fonts/JetBrainsMonoNerdFont"
+fi
+
+if [ ! -d "$HOME/.local/share/fonts/SourceCodePro" ]; then
+  # No apt package for this font on current Ubuntu releases (fonts-adobe-sourcecodepro
+  # was removed) - install straight from the upstream GitHub release instead.
+  mkdir -p "$HOME/.local/share/fonts/SourceCodePro"
+  source_code_pro_url="$(curl -fsSL https://api.github.com/repos/adobe-fonts/source-code-pro/releases/latest \
+    | grep -Po '"browser_download_url": "\K[^"]*TTF-source-code-pro[^"]*\.zip')"
+  curl -fsSLo /tmp/SourceCodePro.zip "$source_code_pro_url"
+  unzip -o /tmp/SourceCodePro.zip -d "$HOME/.local/share/fonts/SourceCodePro"
+  rm -f /tmp/SourceCodePro.zip
+  fc-cache -f "$HOME/.local/share/fonts/SourceCodePro"
 fi
 
 if ! command -v ghostty >/dev/null 2>&1; then

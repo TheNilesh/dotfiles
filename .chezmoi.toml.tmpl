@@ -1,6 +1,9 @@
+{{- $gitName := "Nilesh" -}}
+{{- $gitEmail := "TheNilesh@users.noreply.github.com" -}}
+
 [data]
-    minimal = {{ promptBoolOnce . "minimal" "Minimal install (troubleshooting VM: tmux + kubectl only)" false }}
+    minimal = {{ promptBool "minimal" false }}
 
 [data.git_identity]
-    name = {{ promptStringOnce . "git_identity.name" "Name for git commits" | quote }}
-    email = {{ promptStringOnce . "git_identity.email" "Email for git commits" | quote }}
+    name = {{ promptStringOnce . "git_identity.name" "Name for git commits" $gitName | quote }}
+    email = {{ promptStringOnce . "git_identity.email" "Email for git commits" $gitEmail | quote }}
