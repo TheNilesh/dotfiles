@@ -1,0 +1,35 @@
+{{/* Claude Code rewrites ~/.claude/settings.json at runtime (plugin toggles,
+     effortLevel, modelSettings, autoMode). Passing those keys through from
+     the live file avoids clobbering them on every `chezmoi apply` and stops
+     the perpetual diff churn. Only the keys below are chezmoi-managed. */ -}}
+{{- $liveFile := joinPath .chezmoi.homeDir ".claude/settings.json" -}}
+{{- $live := dict -}}
+{{- if stat $liveFile -}}
+{{- $live = include $liveFile | fromJson -}}
+{{- end -}}
+{{- $defaultPlugins := dict
+      "skill-creator@claude-plugins-official" true
+      "superpowers@claude-plugins-official" true
+      "code-review@claude-plugins-official" true
+      "context7@claude-plugins-official" true
+      "slack@claude-plugins-official" true
+      "teamcity-cli@claude-plugins-official" true
+      "pf9-pcd-v@pf9-hermione" true
+-}}
+{
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "enabledPlugins": {{ get $live "enabledPlugins" | default $defaultPlugins | toJson }},
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "auto",
+  "preferredNotifChannel": "terminal_bell",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true{{ if hasKey $live "effortLevel" }},
+  "effortLevel": {{ $live.effortLevel | toJson }}{{ end }}{{ if hasKey $live "modelSettings" }},
+  "modelSettings": {{ $live.modelSettings | toJson }}{{ end }}{{ if hasKey $live "autoMode" }},
+  "autoMode": {{ $live.autoMode | toJson }}{{ end }}
+}
